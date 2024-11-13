@@ -1,18 +1,9 @@
-import localFont from "next/font/local";
 import "./globals.css";
+import { Sora } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/toaster";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+const sora = Sora({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
@@ -23,9 +14,7 @@ export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+        <body className={`${sora.className} antialiased`}>
           {children}
           <Toaster />
         </body>
