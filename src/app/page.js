@@ -96,24 +96,26 @@ export default function NominationForm() {
                   />
                 ))}
               </CardContent>
-              <CardFooter className="flex flex-col gap-2">
+              <CardFooter>
                 {!submitted && (
                   <Button type="submit" className="w-full">
                     Kirim Nominasi
                   </Button>
                 )}
-                <Button
-                  variant="destructive"
-                  className="px-6 font-bold"
-                  onClick={() => signOut({ redirectUrl: "/sign-in" })}
-                >
-                  Sign Out
-                </Button>
               </CardFooter>
             </form>
           </Form>
         )}
       </Card>
+      <footer>
+        <Button
+          variant="destructive"
+          className="px-6 font-bold"
+          onClick={() => signOut({ redirectUrl: "/sign-in" })}
+        >
+          Sign Out
+        </Button>
+      </footer>
     </main>
   );
 }
