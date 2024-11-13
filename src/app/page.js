@@ -19,6 +19,8 @@ import {
 } from "@/components/ui/form";
 import { useSubmitNomination } from "@/hooks/useSubmitNomination";
 import { useAuth, useClerk } from "@clerk/nextjs";
+import { useEffect } from "react";
+import { redirect } from "next/navigation";
 
 const categoryLabels = {
   terkocak: "Terkocak",
@@ -30,7 +32,13 @@ const categoryLabels = {
 
 export default function NominationForm() {
   const { signOut } = useClerk();
-  const { isLoaded } = useAuth();
+  const { isLoaded, isSignedIn } = useAuth();
+
+  useEffect(() => {
+    if (!isSignedIn) {
+      redirect("/sign-in");
+    }
+  }, [isSignedIn]);
 
   const form = useForm({
     defaultValues: {
