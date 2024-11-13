@@ -18,6 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useSubmitNomination } from "@/hooks/useSubmitNomination";
+import { useAuth, useClerk } from "@clerk/nextjs";
 
 const categoryLabels = {
   terkocak: "Terkocak",
@@ -28,6 +29,9 @@ const categoryLabels = {
 };
 
 export default function NominationForm() {
+  const { signOut } = useClerk();
+  const { isLoaded } = useAuth();
+
   const form = useForm({
     defaultValues: {
       terkocak: "",
@@ -44,8 +48,12 @@ export default function NominationForm() {
     await submitNomination(values);
   };
 
+  if (!isLoaded) {
+    return null;
+  }
+
   return (
-    <main className="flex min-h-screen items-center justify-center">
+    <main className="min-h-screen flex flex-col gap-4 items-center justify-center">
       <Card className="w-full max-w-2xl mx-auto">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-center">
@@ -88,12 +96,19 @@ export default function NominationForm() {
                   />
                 ))}
               </CardContent>
-              <CardFooter>
+              <CardFooter className="flex flex-col gap-2">
                 {!submitted && (
                   <Button type="submit" className="w-full">
                     Kirim Nominasi
                   </Button>
                 )}
+                <Button
+                  variant="destructive"
+                  className="px-6 font-bold"
+                  onClick={() => signOut({ redirectUrl: "/sign-in" })}
+                >
+                  Sign Out
+                </Button>
               </CardFooter>
             </form>
           </Form>
