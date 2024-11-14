@@ -6,6 +6,8 @@ import { useUser } from "@clerk/nextjs";
 export function useSubmitNomination() {
   const { toast } = useToast();
   const { user } = useUser();
+
+  const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const submitNomination = async (values) => {
@@ -21,6 +23,8 @@ export function useSubmitNomination() {
       });
       return;
     }
+
+    setLoading(true);
 
     try {
       await nomineeService.postNominee({
@@ -41,8 +45,10 @@ export function useSubmitNomination() {
         } Kode Error: ${err.status || "N/A"}`,
         variant: "destructive",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
-  return { submitNomination, submitted };
+  return { submitNomination, loading, submitted };
 }

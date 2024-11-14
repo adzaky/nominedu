@@ -21,6 +21,7 @@ import { useSubmitNomination } from "@/hooks/useSubmitNomination";
 import { useAuth, useClerk } from "@clerk/nextjs";
 import { useEffect } from "react";
 import { redirect } from "next/navigation";
+import { LoadingButton } from "@/components/ui/loading-button";
 
 const categoryLabels = {
   terkocak: "Terkocak",
@@ -50,7 +51,7 @@ export default function NominationForm() {
     },
   });
 
-  const { submitNomination, submitted } = useSubmitNomination();
+  const { submitNomination, loading, submitted } = useSubmitNomination();
 
   const onSubmit = async (values) => {
     await submitNomination(values);
@@ -69,9 +70,9 @@ export default function NominationForm() {
           </CardTitle>
         </CardHeader>
         {submitted ? (
-          <p className="text-center text-green-600">
+          <CardContent className="text-center text-green-600">
             Terima kasih atas nominasi Anda!
-          </p>
+          </CardContent>
         ) : (
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -106,9 +107,13 @@ export default function NominationForm() {
               </CardContent>
               <CardFooter>
                 {!submitted && (
-                  <Button type="submit" className="w-full">
+                  <LoadingButton
+                    type="submit"
+                    loading={loading}
+                    className="w-full"
+                  >
                     Kirim Nominasi
-                  </Button>
+                  </LoadingButton>
                 )}
               </CardFooter>
             </form>
