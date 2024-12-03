@@ -1,38 +1,29 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { useSubmitNomination } from "@/hooks/useSubmitNomination";
-import { useAuth, useClerk } from "@clerk/nextjs";
+import Image from "next/image";
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { redirect } from "next/navigation";
+import { useAuth } from "@clerk/nextjs";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { DotsLoader } from "@/components/ui/dots-loader";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { LoadingButton } from "@/components/ui/loading-button";
+import { TitleContainer } from "@/components/ui/title-container";
+import { useSubmitNomination } from "@/hooks/useSubmitNomination";
+import { Trophy, Crown, Laugh, Meh, Clock, Coffee, Shirt } from "lucide-react";
 
 const categoryLabels = {
-  terkocak: "Terkocak",
-  terbucin: "Terbucin",
-  tergaul: "Tergaul",
-  terpintar: "Terpintar",
-  terrajin: "Terrajin",
+  terpopulerKing: { label: "Ter-Populer (King)", icon: Crown },
+  terpopulerQueen: { label: "Ter-Populer (Queen)", icon: Crown },
+  terkocak: { label: "Ter-Kocak", icon: Laugh },
+  terdiam: { label: "Ter-Diam", icon: Meh },
+  terlambat: { label: "Ter-Lambat", icon: Clock },
+  terngantuk: { label: "Ter-Ngantuk", icon: Coffee },
+  termodis: { label: "Ter-Modis", icon: Shirt },
 };
 
 export default function NominationForm() {
-  const { signOut } = useClerk();
   const { isLoaded, isSignedIn } = useAuth();
 
   useEffect(() => {
@@ -43,11 +34,14 @@ export default function NominationForm() {
 
   const form = useForm({
     defaultValues: {
+      mentor_terbaik: "",
+      terpopulerKing: "",
+      terpopulerQueen: "",
       terkocak: "",
-      terbucin: "",
-      tergaul: "",
-      terpintar: "",
-      terrajin: "",
+      terdiam: "",
+      terlambat: "",
+      terngantuk: "",
+      termodis: "",
     },
   });
 
@@ -58,77 +52,90 @@ export default function NominationForm() {
   };
 
   if (!isLoaded) {
-    return null;
+    return <DotsLoader />;
   }
 
   return (
-    <main className="min-h-screen flex flex-col gap-4 items-center justify-center">
-      <Card className="w-full max-w-2xl mx-auto">
+    <main className="flex min-h-screen flex-col items-center justify-center gap-4 p-8">
+      <Card className="mx-auto w-full max-w-2xl rounded-2xl">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">
-            Nominasi Ter-Ter Intern
-          </CardTitle>
+          <CardTitle className="text-center text-2xl font-black">Nominasi Ter-Ter Intern MSIB 7</CardTitle>
+          <Image src="/educourse.png" alt="Educourse Logo" width={200} height={200} className="mx-auto grayscale" />
         </CardHeader>
-        {submitted ? (
-          <CardContent className="text-center text-green-600">
-            Terima kasih atas nominasi Anda!
-          </CardContent>
-        ) : (
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              <CardContent className="space-y-4 py-6">
-                <p className="text-sm italic text-muted-foreground">
-                  Jika tidak tahu ingin mengisi siapa, gunakan strip
-                  &quot;-&quot;.
-                </p>
-                {Object.entries(categoryLabels).map(([category, label]) => (
-                  <FormField
-                    key={category}
-                    control={form.control}
-                    name={category}
-                    rules={{
-                      required: `Tidak boleh kosong.`,
-                    }}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{label}</FormLabel>
-                        <FormControl>
-                          <Input
-                            id={category}
-                            placeholder={`Masukkan nama nominee`}
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                ))}
-              </CardContent>
-              <CardFooter>
-                {!submitted && (
-                  <LoadingButton
-                    type="submit"
-                    loading={loading}
-                    className="w-full"
-                  >
-                    Kirim Nominasi
-                  </LoadingButton>
+        <p className="mb-8 text-center text-sm font-bold italic text-destructive">
+          &quot;Nominasi Hanya Boleh Satu Nama per Kategori.&quot;
+        </p>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <CardContent className="mt-6 space-y-10">
+              <FormField
+                control={form.control}
+                name="mentor_terbaik"
+                rules={{
+                  required: "Tidak boleh kosong.",
+                }}
+                render={({ field }) => (
+                  <div className="col-span-2 mb-4 space-y-4">
+                    <TitleContainer className="mb-3 text-lg font-bold">Mentor&apos;s Nominee</TitleContainer>
+                    <FormItem>
+                      <FormLabel className="flex items-center gap-2 font-semibold">
+                        <Trophy className="size-4" />
+                        Mentor Ter-Baik
+                      </FormLabel>
+                      <FormControl>
+                        <Input id="mentor_terbaik" placeholder="Mentor Ter-Baik" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  </div>
                 )}
-              </CardFooter>
-            </form>
-          </Form>
-        )}
+              />
+              <div className="space-y-4">
+                <TitleContainer className="mb-3 text-lg font-bold">Intern&apos;s Nominee</TitleContainer>
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                  {Object.entries(categoryLabels).map(([category, { label, icon: Icon }]) => (
+                    <FormField
+                      key={category}
+                      control={form.control}
+                      name={category}
+                      rules={{
+                        required: "Tidak boleh kosong.",
+                      }}
+                      render={({ field }) => (
+                        <div
+                          className={
+                            category === "terpopulerKing" || category === "terpopulerQueen"
+                              ? "col-span-1"
+                              : "col-span-2"
+                          }
+                        >
+                          <FormItem>
+                            <FormLabel className="flex items-center gap-2 font-semibold">
+                              <Icon className="size-4" />
+                              {label}
+                            </FormLabel>
+                            <FormControl>
+                              <Input id={category} placeholder={`Si Paling ${label}`} {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        </div>
+                      )}
+                    />
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter>
+              {!submitted && (
+                <LoadingButton type="submit" loading={loading} className="w-full">
+                  Kirim Nominasi
+                </LoadingButton>
+              )}
+            </CardFooter>
+          </form>
+        </Form>
       </Card>
-      <footer>
-        <Button
-          variant="destructive"
-          className="px-6 font-bold"
-          onClick={() => signOut({ redirectUrl: "/sign-in" })}
-        >
-          Sign Out
-        </Button>
-      </footer>
     </main>
   );
 }
