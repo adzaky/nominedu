@@ -11,26 +11,27 @@ export function useSubmitNomination() {
   const [submitted, setSubmitted] = useState(false);
 
   const submitNomination = async (values) => {
-    const nominees = Object.values(values).filter((nominee) => nominee !== "-");
-    const uniqueNominees = new Set(nominees);
+    const nomineeNames = Object.values(values);
+    const hasDuplicateNames = new Set(nomineeNames).size !== nomineeNames.length;
 
-    if (uniqueNominees.size !== nominees.length) {
+    if (hasDuplicateNames) {
       toast({
         title: "Nominasi Gagal",
-        description:
-          "Setiap kategori harus memiliki nama nominee yang berbeda.",
+        description: "Setiap kategori harus memiliki nama nominee yang berbeda.",
         variant: "destructive",
       });
       return;
     }
 
+    const nominees = {
+      userId: user.id,
+      ...values,
+    };
+
     setLoading(true);
 
     try {
-      await nomineeService.postNominee({
-        userId: user.id,
-        ...values,
-      });
+      await nomineeService.postNominee(nominees);
 
       setSubmitted(true);
       toast({
