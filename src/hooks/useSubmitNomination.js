@@ -25,7 +25,14 @@ export function useSubmitNomination() {
 
     const nominees = {
       userId: user.id,
-      ...values,
+      mentor_terbaik: `${values.prefix_mentor} ${values.mentor_terbaik}`,
+      terpopulerKing: values.terpopulerKing,
+      terpopulerQueen: values.terpopulerQueen,
+      terkocak: values.terkocak,
+      terdiam: values.terdiam,
+      terlambat: values.terlambat,
+      terngantuk: values.terngantuk,
+      termodis: values.termodis,
     };
 
     setLoading(true);
