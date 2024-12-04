@@ -48,7 +48,7 @@ export function useSubmitNomination() {
     } catch (err) {
       toast({
         title: "Nominasi Gagal",
-        description: `Terjadi kesalahan saat mengirim nominasi. Kode Error: ${err.status || "N/A"}`,
+        description: `Terjadi kesalahan saat mengirim nominasi. Kode Error: ${err?.status || "N/A"}`,
         variant: "destructive",
       });
     } finally {
