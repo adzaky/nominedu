@@ -26,6 +26,7 @@ const categoryLabels = {
 
 export default function NominationForm() {
   const { isLoaded, isSignedIn } = useAuth();
+  const { signOut } = useClerk();
 
   useEffect(() => {
     if (!isSignedIn) {
@@ -166,6 +167,11 @@ export default function NominationForm() {
           </form>
         </Form>
       </Card>
+      <footer>
+        <Button variant="destructive" className="px-6 font-bold" onClick={() => signOut({ redirectUrl: "/sign-in" })}>
+          Sign Out
+        </Button>
+      </footer>
     </main>
   );
 }
