@@ -7,4 +7,7 @@ export const nomineeService = {
   postNominee(data) {
     return fetcher.post("/nominees", data);
   },
+  getTopNominees() {
+    return fetcher.get("/result");
+  },
 };

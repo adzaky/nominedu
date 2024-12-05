@@ -3,7 +3,8 @@ import Image from "next/image";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { redirect } from "next/navigation";
-import { useAuth } from "@clerk/nextjs";
+import { useAuth, useClerk, useUser } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { DotsLoader } from "@/components/ui/dots-loader";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -25,14 +26,17 @@ const categoryLabels = {
 };
 
 export default function NominationForm() {
+  const { user } = useUser();
   const { isLoaded, isSignedIn } = useAuth();
   const { signOut } = useClerk();
 
   useEffect(() => {
-    if (!isSignedIn) {
+    if (isSignedIn && user) {
+      localStorage.setItem("nominee_role", user.publicMetadata.role);
+    } else {
       redirect("/sign-in");
     }
-  }, [isSignedIn]);
+  }, [isSignedIn, user]);
 
   const form = useForm({
     defaultValues: {
@@ -71,77 +75,79 @@ export default function NominationForm() {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <CardContent className="mt-6 space-y-10">
-              <div className="inline-flex items-end gap-2">
-                <FormField
-                  control={form.control}
-                  name="prefix_mentor"
-                  rules={{
-                    required: "Tidak boleh kosong.",
-                  }}
-                  render={({ field }) => (
-                    <div className="col-span-2 mb-4 space-y-4">
-                      <TitleContainer className="text-lg font-bold">Mentor&apos;s Nominee</TitleContainer>
-                      <FormItem>
-                        <FormLabel className="flex items-center gap-2 font-semibold">
-                          <Trophy className="size-4" />
-                          Mentor Ter-Baik
-                        </FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Mr/Ms" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value="Mr">Mr</SelectItem>
-                            <SelectItem value="Ms">Ms</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    </div>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="mentor_terbaik"
-                  rules={{
-                    required: "Tidak boleh kosong.",
-                  }}
-                  render={({ field }) => (
-                    <div className="col-span-2 mb-4 space-y-4">
-                      <FormItem>
-                        <FormControl>
-                          <Input id="mentor_terbaik" placeholder="Mentor Ter-Baik" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    </div>
-                  )}
-                />
-              </div>
-
               <div className="space-y-4">
-                <TitleContainer className="mb-3 text-lg font-bold">Intern&apos;s Nominee</TitleContainer>
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                  {Object.entries(categoryLabels).map(([category, { label, icon: Icon }]) => (
+                <TitleContainer className="text-sm font-bold lg:text-lg">Mentor&apos;s Nominee</TitleContainer>
+                <div className="grid grid-cols-3 items-end gap-2">
+                  <div className="col-span-3 lg:col-span-1">
                     <FormField
-                      key={category}
                       control={form.control}
-                      name={category}
+                      name="prefix_mentor"
                       rules={{
                         required: "Tidak boleh kosong.",
                       }}
                       render={({ field }) => (
-                        <div
-                          className={
-                            category === "terpopulerKing" || category === "terpopulerQueen"
-                              ? "col-span-1"
-                              : "col-span-2"
-                          }
-                        >
+                        <FormItem>
+                          <FormLabel className="flex items-center gap-2 text-sm font-semibold lg:text-base">
+                            <Trophy className="size-4" />
+                            Mentor Ter-Baik
+                          </FormLabel>
+                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Mr/Ms" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="Mr">Mr</SelectItem>
+                              <SelectItem value="Ms">Ms</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="col-span-3 lg:col-span-2">
+                    <FormField
+                      control={form.control}
+                      name="mentor_terbaik"
+                      rules={{
+                        required: "Tidak boleh kosong.",
+                      }}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input id="mentor_terbaik" placeholder="Mentor Ter-Baik" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <TitleContainer className="text-sm font-bold lg:text-lg">Intern&apos;s Nominee</TitleContainer>
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                  {Object.entries(categoryLabels).map(([category, { label, icon: Icon }]) => (
+                    <div
+                      key={category}
+                      className={
+                        category === "terpopulerKing" || category === "terpopulerQueen"
+                          ? "col-span-2 lg:col-span-1"
+                          : "col-span-2"
+                      }
+                    >
+                      <FormField
+                        control={form.control}
+                        name={category}
+                        rules={{
+                          required: "Tidak boleh kosong.",
+                        }}
+                        render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="flex items-center gap-2 font-semibold">
+                            <FormLabel className="flex items-center gap-2 text-sm font-semibold lg:text-base">
                               <Icon className="size-4" />
                               {label}
                             </FormLabel>
@@ -150,9 +156,9 @@ export default function NominationForm() {
                             </FormControl>
                             <FormMessage />
                           </FormItem>
-                        </div>
-                      )}
-                    />
+                        )}
+                      />
+                    </div>
                   ))}
                 </div>
               </div>
