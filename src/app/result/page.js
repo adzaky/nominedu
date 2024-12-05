@@ -31,7 +31,7 @@ const NominationResult = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (isLoaded && (!user || !user.publicMetadata.role.includes("admin"))) {
+    if (isLoaded && (!user || user.publicMetadata.role !== ("admin"))) {
       redirect("/");
     }
   }, [isLoaded, user]);
@@ -54,7 +54,7 @@ const NominationResult = () => {
     };
 
     fetchTopNominees();
-  }, [isLoaded, user]);
+  }, []);
 
   if (isLoading) {
     return (
