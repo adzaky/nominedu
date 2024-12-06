@@ -2,6 +2,7 @@
 import { toast } from "@/components/hooks/use-toast";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { DotsLoader } from "@/components/ui/dots-loader";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { nomineeService } from "@/services/nominee";
 import { useUser } from "@clerk/nextjs";
 import { Meh } from "lucide-react";
@@ -82,38 +83,14 @@ const NominationResult = () => {
         />
       </header>
       <div className="grid w-full items-center gap-4 lg:max-w-screen-lg lg:grid-cols-2 lg:gap-2">
-        <Card className="col-span-2 mb-8 space-y-4 lg:h-96">
-          <CardHeader className="flex items-center gap-4 lg:flex-row">
-            <Trophy />
-            <h2 className="font-bold lg:text-2xl">Most Kind Mentor</h2>
-          </CardHeader>
-          <CardContent className="space-y-6 lg:space-y-10">
-            {topNominees["mostkind_mentor"]?.map((nominee, index) => (
-              <div key={index} className="flex items-center gap-4">
-                <div className="flex flex-col gap-2">
-                  <span>{nominee.name}</span>
-                  <span>{nominee.count} Votes</span>
-                </div>
-                {index === 0 && (
-                  <div className="ml-auto size-12 rounded-xl border bg-destructive p-2">
-                    <Trophy className="size-full" />
-                  </div>
-                )}
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-        {Object.entries(categoryLabels).map(([category, { label, icon: Icon }], index) => (
-          <Card
-            key={category}
-            className={`${category === "mostkind" ? "lg:col-span-2" : ""} space-y-4 lg:h-96`}
-          >
+        <ScrollArea className="col-span-2 mb-8 rounded-2xl border lg:h-96">
+          <Card className="space-y-4">
             <CardHeader className="flex items-center gap-4 lg:flex-row">
-              <Icon />
-              <h2 className="font-bold lg:text-2xl">{label}</h2>
+              <Trophy />
+              <h2 className="font-bold lg:text-2xl">Most Kind Mentor</h2>
             </CardHeader>
             <CardContent className="space-y-6 lg:space-y-10">
-              {topNominees[category]?.map((nominee, index) => (
+              {topNominees["mostkind_mentor"]?.map((nominee, index) => (
                 <div key={index} className="flex items-center gap-4">
                   <div className="flex flex-col gap-2">
                     <span>{nominee.name}</span>
@@ -128,6 +105,34 @@ const NominationResult = () => {
               ))}
             </CardContent>
           </Card>
+        </ScrollArea>
+        {Object.entries(categoryLabels).map(([category, { label, icon: Icon }], index) => (
+          <ScrollArea
+            key={category}
+            className={`${category === "mostkind" ? "lg:col-span-2" : ""} rounded-2xl border lg:h-96`}
+          >
+            <Card className="space-y-4">
+              <CardHeader className="flex items-center gap-4 lg:flex-row">
+                <Icon />
+                <h2 className="font-bold lg:text-2xl">{label}</h2>
+              </CardHeader>
+              <CardContent className="space-y-6 lg:space-y-10">
+                {topNominees[category]?.map((nominee, index) => (
+                  <div key={index} className="flex items-center gap-4">
+                    <div className="flex flex-col gap-2">
+                      <span>{nominee.name}</span>
+                      <span>{nominee.count} Votes</span>
+                    </div>
+                    {index === 0 && (
+                      <div className="ml-auto size-12 rounded-xl border bg-destructive p-2">
+                        <Trophy className="size-full" />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </ScrollArea>
         ))}
       </div>
     </main>
