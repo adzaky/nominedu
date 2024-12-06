@@ -23,7 +23,7 @@ export async function GET() {
       "mostfashionable",
     ];
 
-    const calculateTop3 = (category) => {
+    const calculateNomination = (category) => {
       const voteCount = {};
 
       nominees.forEach((nomination) => {
@@ -33,19 +33,17 @@ export async function GET() {
         }
       });
 
-      const sortedVotes = Object.entries(voteCount)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 3);
+      const sortedVotes = Object.entries(voteCount).sort((a, b) => b[1] - a[1]);
 
       return sortedVotes.map(([name, count]) => ({ name, count }));
     };
 
-    const top3Results = {};
+    const results = {};
     categories.forEach((category) => {
-      top3Results[category] = calculateTop3(category);
+      results[category] = calculateNomination(category);
     });
 
-    return NextResponse.json(top3Results);
+    return NextResponse.json(results);
   } catch (err) {
     console.error(err);
     return NextResponse.json({ message: "Something went wrong" }, { status: 500 });
