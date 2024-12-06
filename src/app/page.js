@@ -16,7 +16,6 @@ import { useSubmitNomination } from "@/hooks/useSubmitNomination";
 import { Trophy, Crown, Laugh, Meh, Coffee, Shirt } from "lucide-react";
 
 const categoryLabels = {
-  mostkind_mentor: { label: "Most Kind Mentor", icon: Crown },
   mostpopularKing: { label: "Most Popular (King)", icon: Crown },
   mostpopularQueen: { label: "Most Popular (Queen)", icon: Crown },
   mostkind: { label: "Most Kind", icon: Trophy },
