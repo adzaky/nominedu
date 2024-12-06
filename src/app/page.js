@@ -13,16 +13,17 @@ import { LoadingButton } from "@/components/ui/loading-button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { TitleContainer } from "@/components/ui/title-container";
 import { useSubmitNomination } from "@/hooks/useSubmitNomination";
-import { Trophy, Crown, Laugh, Meh, Clock, Coffee, Shirt } from "lucide-react";
+import { Trophy, Crown, Laugh, Meh, Coffee, Shirt } from "lucide-react";
 
 const categoryLabels = {
-  terpopulerKing: { label: "Ter-Populer (King)", icon: Crown },
-  terpopulerQueen: { label: "Ter-Populer (Queen)", icon: Crown },
-  terkocak: { label: "Ter-Kocak", icon: Laugh },
-  terdiam: { label: "Ter-Diam", icon: Meh },
-  terlambat: { label: "Ter-Lambat", icon: Clock },
-  terngantuk: { label: "Ter-Ngantuk", icon: Coffee },
-  termodis: { label: "Ter-Modis", icon: Shirt },
+  mostkind_mentor: { label: "Most Kind Mentor", icon: Crown },
+  mostpopularKing: { label: "Most Popular (King)", icon: Crown },
+  mostpopularQueen: { label: "Most Popular (Queen)", icon: Crown },
+  mostkind: { label: "Most Kind", icon: Trophy },
+  mostfunny: { label: "Most Funny", icon: Laugh },
+  mostquiet: { label: "Most Quiet", icon: Meh },
+  mostsleepy: { label: "Most Sleepy", icon: Coffee },
+  mostfashionable: { label: "Most Fashionable", icon: Shirt },
 };
 
 export default function NominationForm() {
@@ -41,14 +42,14 @@ export default function NominationForm() {
   const form = useForm({
     defaultValues: {
       prefix_mentor: "",
-      mentor_terbaik: "",
-      terpopulerKing: "",
-      terpopulerQueen: "",
-      terkocak: "",
-      terdiam: "",
-      terlambat: "",
-      terngantuk: "",
-      termodis: "",
+      mostkind_mentor: "",
+      mostpopularKing: "",
+      mostpopularQueen: "",
+      mostfunny: "",
+      mostquiet: "",
+      mostlate: "",
+      mostsleepy: "",
+      mostfashionable: "",
     },
   });
 
@@ -66,11 +67,11 @@ export default function NominationForm() {
     <main className="flex min-h-screen flex-col items-center justify-center gap-4 p-8">
       <Card className="mx-auto w-full max-w-2xl rounded-2xl">
         <CardHeader>
-          <CardTitle className="text-center text-2xl font-black">Nominasi Ter-Ter Intern MSIB 7</CardTitle>
+          <CardTitle className="text-center text-2xl font-black">Nomination Intern MSIB 7</CardTitle>
           <Image src="/educourse.png" alt="Educourse Logo" width={200} height={200} className="mx-auto grayscale" />
         </CardHeader>
         <p className="mb-8 text-center text-sm font-bold italic text-destructive">
-          &quot;Nominasi Hanya Boleh Satu Nama per Kategori.&quot;
+          &quot;Only One Name Per Category for Nomination.&quot;
         </p>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -83,13 +84,13 @@ export default function NominationForm() {
                       control={form.control}
                       name="prefix_mentor"
                       rules={{
-                        required: "Tidak boleh kosong.",
+                        required: "Please fill in the mentor prefix.",
                       }}
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="flex items-center gap-2 text-sm font-semibold lg:text-base">
                             <Trophy className="size-4" />
-                            Mentor Ter-Baik
+                            Most Kind Mentor
                           </FormLabel>
                           <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
@@ -110,14 +111,14 @@ export default function NominationForm() {
                   <div className="col-span-3 lg:col-span-2">
                     <FormField
                       control={form.control}
-                      name="mentor_terbaik"
+                      name="mostkind_mentor"
                       rules={{
-                        required: "Tidak boleh kosong.",
+                        required: "Please fill in the nomination.",
                       }}
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <Input id="mentor_terbaik" placeholder="Mentor Ter-Baik" {...field} />
+                            <Input id="mostkind_mentor" placeholder="Mentor's Name" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -134,7 +135,7 @@ export default function NominationForm() {
                     <div
                       key={category}
                       className={
-                        category === "terpopulerKing" || category === "terpopulerQueen"
+                        category === "mostpopularKing" || category === "mostpopularQueen"
                           ? "col-span-2 lg:col-span-1"
                           : "col-span-2"
                       }
@@ -143,7 +144,7 @@ export default function NominationForm() {
                         control={form.control}
                         name={category}
                         rules={{
-                          required: "Tidak boleh kosong.",
+                          required: "Please fill in the nomination.",
                         }}
                         render={({ field }) => (
                           <FormItem>
@@ -152,7 +153,7 @@ export default function NominationForm() {
                               {label}
                             </FormLabel>
                             <FormControl>
-                              <Input id={category} placeholder={`Si Paling ${label}`} {...field} />
+                              <Input id={category} placeholder={label} {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -166,7 +167,7 @@ export default function NominationForm() {
             <CardFooter>
               {!submitted && (
                 <LoadingButton type="submit" loading={loading} className="w-full">
-                  Kirim Nominasi
+                  Send Nomination
                 </LoadingButton>
               )}
             </CardFooter>

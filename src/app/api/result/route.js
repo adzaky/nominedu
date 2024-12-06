@@ -9,7 +9,7 @@ export async function GET() {
     const nominees = await db.collection("nominees").find().toArray();
 
     if (nominees.length === 0) {
-      return NextResponse.json({ message: "Data nominasi tidak ditemukan" });
+      return NextResponse.json({ message: "No nominees found" });
     }
 
     const categories = [
@@ -48,7 +48,7 @@ export async function GET() {
     return NextResponse.json(top3Results);
   } catch (err) {
     console.error(err);
-    return NextResponse.json({ message: "Terjadi kesalahan" }, { status: 500 });
+    return NextResponse.json({ message: "Something went wrong" }, { status: 500 });
   } finally {
     client.close();
   }

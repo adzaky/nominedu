@@ -42,13 +42,13 @@ export function useSubmitNomination() {
 
       setSubmitted(true);
       toast({
-        title: "Nominasi Berhasil",
-        description: `Terima kasih atas nominasi Anda!`,
+        title: "Saving Nomination Successfully",
+        description: "Thank you for your participation.",
       });
     } catch (err) {
       toast({
-        title: "Nominasi Gagal",
-        description: `Terjadi kesalahan saat mengirim nominasi. Kode Error: ${err?.status || "N/A"}`,
+        title: "Saving Nomination Failed",
+        description: "Something went wrong. Contact the IT team",
         variant: "destructive",
       });
     } finally {
