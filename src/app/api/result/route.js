@@ -13,14 +13,14 @@ export async function GET() {
     }
 
     const categories = [
-      "mentor_terbaik",
-      "terpopulerKing",
-      "terpopulerQueen",
-      "terkocak",
-      "terdiam",
-      "terlambat",
-      "terngantuk",
-      "termodis",
+      "mostkind_mentor",
+      "mostpopularKing",
+      "mostpopularQueen",
+      "mostkind",
+      "mostfunny",
+      "mostquiet",
+      "mostsleepy",
+      "mostfashionable",
     ];
 
     const calculateTop3 = (category) => {

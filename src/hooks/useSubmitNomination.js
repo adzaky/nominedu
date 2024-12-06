@@ -16,8 +16,8 @@ export function useSubmitNomination() {
 
     if (hasDuplicateNames) {
       toast({
-        title: "Nominasi Gagal",
-        description: "Setiap kategori harus memiliki nama nominee yang berbeda.",
+        title: "Sending Nomination Failed",
+        description: "Only One Name Per Category for Nomination.",
         variant: "destructive",
       });
       return;
@@ -25,14 +25,14 @@ export function useSubmitNomination() {
 
     const nominees = {
       userId: user.id,
-      mentor_terbaik: `${values.prefix_mentor} ${values.mentor_terbaik}`,
-      terpopulerKing: values.terpopulerKing,
-      terpopulerQueen: values.terpopulerQueen,
-      terkocak: values.terkocak,
-      terdiam: values.terdiam,
-      terlambat: values.terlambat,
-      terngantuk: values.terngantuk,
-      termodis: values.termodis,
+      mostkind_mentor: `${values.prefix_mentor} ${values.mostkind_mentor}`,
+      mostpopularKing: values.mostpopularKing,
+      mostpopularQueen: values.mostpopularQueen,
+      mostkind: values.mostkind,
+      mostfunny: values.mostfunny,
+      mostquiet: values.mostquiet,
+      mostsleepy: values.mostsleepy,
+      mostfashionable: values.mostfashionable,
     };
 
     setLoading(true);
@@ -42,12 +42,12 @@ export function useSubmitNomination() {
 
       setSubmitted(true);
       toast({
-        title: "Saving Nomination Successfully",
+        title: "Sending Nomination Successfully",
         description: "Thank you for your participation.",
       });
     } catch (err) {
       toast({
-        title: "Saving Nomination Failed",
+        title: "Sending Nomination Failed",
         description: "Something went wrong. Contact the IT team",
         variant: "destructive",
       });
