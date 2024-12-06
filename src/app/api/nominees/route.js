@@ -26,12 +26,6 @@ export async function POST(req) {
 
   const data = await req.json();
 
-  for (const key in data) {
-    if (data[key] === "") {
-      delete data[key];
-    }
-  }
-
   if (Object.keys(data).length === 0) {
     return NextResponse.json({ message: "All fields are empty. Please fill at least one field." }, { status: 400 });
   }

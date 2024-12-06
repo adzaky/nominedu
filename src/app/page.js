@@ -94,7 +94,7 @@ export default function NominationForm() {
                           <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
                               <SelectTrigger>
-                                <SelectValue placeholder="Mr/Ms" />
+                                <SelectValue placeholder="Please Select Mr/Ms" />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
