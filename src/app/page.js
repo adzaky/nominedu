@@ -6,11 +6,11 @@ import { redirect } from "next/navigation";
 import { useAuth, useClerk, useUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { DotsLoader } from "@/components/ui/dots-loader";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { LoadingButton } from "@/components/ui/loading-button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Spinner } from "@/components/ui/spinner";
 import { TitleContainer } from "@/components/ui/title-container";
 import { useSubmitNomination } from "@/hooks/useSubmitNomination";
 import { Trophy, Crown, Laugh, Meh, Coffee, Shirt } from "lucide-react";
@@ -59,7 +59,7 @@ export default function NominationForm() {
   };
 
   if (!isLoaded) {
-    return <DotsLoader />;
+    return <Spinner size="lg" className="bg-white" />;
   }
 
   return (

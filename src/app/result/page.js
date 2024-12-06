@@ -1,8 +1,8 @@
 "use client";
 import { toast } from "@/components/hooks/use-toast";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { DotsLoader } from "@/components/ui/dots-loader";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Spinner } from "@/components/ui/spinner";
 import { nomineeService } from "@/services/nominee";
 import { useUser } from "@clerk/nextjs";
 import { Meh } from "lucide-react";
@@ -59,7 +59,7 @@ const NominationResult = () => {
   if (isLoading) {
     return (
       <main className="flex min-h-screen items-center justify-center">
-        <DotsLoader />
+        <Spinner size="lg" className="bg-white" />
       </main>
     );
   }
