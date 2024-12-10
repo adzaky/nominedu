@@ -88,7 +88,7 @@ const NominationResult = () => {
         </Button>
       </header>
       <div className="grid w-full items-center gap-4 lg:max-w-screen-lg lg:grid-cols-2 lg:gap-2">
-        <ScrollArea className="mb-8 rounded-2xl border lg:col-span-2 lg:h-96">
+        <ScrollArea className="mb-8 h-[23rem] rounded-2xl border lg:col-span-2 lg:h-96">
           <Card className="space-y-4">
             <CardHeader className="flex items-center gap-4 lg:flex-row">
               <Trophy />
@@ -114,7 +114,7 @@ const NominationResult = () => {
         {Object.entries(categoryLabels).map(([category, { label, icon: Icon }]) => (
           <ScrollArea
             key={category}
-            className={`${category === "mostkind" && "lg:col-span-2"} rounded-2xl border lg:h-96`}
+            className={`${category === "mostkind" && "lg:col-span-2"} h-[23rem] rounded-2xl border lg:h-96`}
           >
             <Card className="space-y-4">
               <CardHeader className="flex items-center gap-4 lg:flex-row">
