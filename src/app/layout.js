@@ -6,8 +6,8 @@ import { Toaster } from "@/components/ui/toaster";
 const sora = Sora({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Nominees Educourse",
-  description: "Nominees Educourse",
+  title: "Nomination Intern MSIB 7 | Educourse.id",
+  description: "Nomination Intern MSIB 7 | Educourse.id",
 };
 
 export default function RootLayout({ children }) {
