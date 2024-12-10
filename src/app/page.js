@@ -67,7 +67,7 @@ export default function NominationForm() {
     <main className="flex min-h-screen flex-col items-center justify-center gap-4 p-8">
       <Card className="mx-auto w-full max-w-2xl rounded-2xl">
         <CardHeader>
-          <CardTitle className="text-center text-2xl font-black">Nomination Intern MSIB 7</CardTitle>
+          <CardTitle className="text-center text-2xl font-black">Nomination MSIB 7 Intern</CardTitle>
           <Image src="/educourse.png" alt="Educourse Logo" width={200} height={200} className="mx-auto grayscale" />
         </CardHeader>
         <p className="mb-8 text-center text-sm font-bold italic text-destructive">
