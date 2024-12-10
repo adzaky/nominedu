@@ -33,7 +33,7 @@ export default function NominationForm() {
 
   useEffect(() => {
     if (isSignedIn && user) {
-      localStorage.setItem("nominee_role", user.publicMetadata.role);
+      localStorage.setItem("nominee_role", user?.publicMetadata?.role);
     } else {
       redirect("/sign-in");
     }
@@ -170,7 +170,7 @@ export default function NominationForm() {
                   Send Nomination
                 </LoadingButton>
               )}
-              {user.publicMetadata.role && (
+              {user?.publicMetadata?.role && (
                 <Button variant="link" asChild>
                   <Link href="/result">Go to Result</Link>
                 </Button>

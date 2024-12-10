@@ -33,7 +33,7 @@ const NominationResult = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (isLoaded && (!user || user.publicMetadata.role !== "admin")) {
+    if (isLoaded && (!user || user?.publicMetadata?.role !== "admin")) {
       redirect("/");
     }
   }, [isLoaded, user]);
