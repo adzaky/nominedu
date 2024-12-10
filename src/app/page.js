@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { redirect } from "next/navigation";
@@ -163,11 +164,16 @@ export default function NominationForm() {
                 </div>
               </div>
             </CardContent>
-            <CardFooter>
+            <CardFooter className="flex flex-col gap-4">
               {!submitted && (
                 <LoadingButton type="submit" loading={loading} className="w-full">
                   Send Nomination
                 </LoadingButton>
+              )}
+              {user.publicMetadata.role && (
+                <Button variant="link" asChild>
+                  <Link href="/result">Go to Result</Link>
+                </Button>
               )}
             </CardFooter>
           </form>

@@ -1,5 +1,8 @@
 "use client";
+import { useEffect, useState } from "react";
+import { redirect } from "next/navigation";
 import { toast } from "@/components/hooks/use-toast";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Spinner } from "@/components/ui/spinner";
@@ -12,8 +15,7 @@ import { Laugh } from "lucide-react";
 import { Crown } from "lucide-react";
 import { Trophy } from "lucide-react";
 import Image from "next/image";
-import { redirect } from "next/navigation";
-import { useEffect, useState } from "react";
+import Link from "next/link";
 
 const categoryLabels = {
   mostpopularKing: { label: "Most Popular (King)", icon: Crown },
@@ -81,9 +83,12 @@ const NominationResult = () => {
           className="mx-auto size-auto grayscale"
           priority
         />
+        <Button variant="link" asChild>
+          <Link href="/">Back to Nomination Form</Link>
+        </Button>
       </header>
-      <div className="grid lg:grid-cols-2 w-full items-center gap-4 lg:max-w-screen-lg lg:gap-2">
-        <ScrollArea className="lg:col-span-2 mb-8 rounded-2xl border lg:h-96">
+      <div className="grid w-full items-center gap-4 lg:max-w-screen-lg lg:grid-cols-2 lg:gap-2">
+        <ScrollArea className="mb-8 rounded-2xl border lg:col-span-2 lg:h-96">
           <Card className="space-y-4">
             <CardHeader className="flex items-center gap-4 lg:flex-row">
               <Trophy />
